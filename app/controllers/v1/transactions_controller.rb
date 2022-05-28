@@ -4,7 +4,7 @@ module V1
 
     # GET /transactions
     def index
-      @transactions = Transaction.all.paginate(page: params[:page], per_page: 10)
+      @transactions = Transaction.cached_all.paginate(page: params[:page], per_page: 10)
       json_response(@transactions)
     end
 

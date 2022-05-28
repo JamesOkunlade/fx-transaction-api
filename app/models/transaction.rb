@@ -7,4 +7,16 @@ class Transaction < ApplicationRecord
     self.input_amount_currency.downcase!
     self.output_amount_currency.downcase!
   end
+
+  after_commit :flush_cache
+
+  def self.cached_all
+    Rails.cache.fetch([name, 'all']) do
+      self.all.to_a
+    end
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name, 'all'])
+  end
 end
