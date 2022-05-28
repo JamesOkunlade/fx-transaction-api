@@ -52,8 +52,8 @@ RSpec.describe "Transactions", type: :request do
   # Test suite for POST /transactions
   describe 'POST /transactions' do
     # valid payload
-    let(:valid_attributes) { { :transaction => { :created_by_id => 44, :input_amount_currency => 'EUr', :input_amount => 1000,
-      :output_amount_currency => 'nGN', :output_amount => 700000, :date_of_transaction => DateTime.now() } } }
+    let(:valid_attributes) { { :transaction => { :created_by_id => 44, :input_amount_currency => 'EUr', :input_amount_cents => 1000_00,
+      :output_amount_currency => 'nGN', :output_amount_cents => 700000_00, :date_of_transaction => DateTime.now() } } }
     
       # invalid payload
     let(:invalid_attributes) { { :transaction => { :input_amount_currency => 'DKR' } } }
@@ -63,9 +63,9 @@ RSpec.describe "Transactions", type: :request do
 
       it 'creates a transaction' do
         expect(json['input_amount_currency']).to eq('eur')
-        expect(json['input_amount']).to eq(1000)
+        expect(json['input_amount_cents']).to eq(1000_00)
         expect(json['output_amount_currency']).to eq('ngn')
-        expect(json['output_amount']).to eq(700000)
+        expect(json['output_amount_cents']).to eq(700000_00)
       end
 
       it 'returns status code 201' do
@@ -82,7 +82,7 @@ RSpec.describe "Transactions", type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed: Created by can't be blank, Input amount can't be blank, Output amount currency can't be blank, Output amount can't be blank, Date of transaction can't be blank/)
+          .to match(/Validation failed: Created by can't be blank, Input amount cents can't be blank, Output amount currency can't be blank, Output amount cents can't be blank, Date of transaction can't be blank/)
       end
     end
   end

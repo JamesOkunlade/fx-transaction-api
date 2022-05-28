@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2022_05_28_111610) do
   create_table "transactions", force: :cascade do |t|
     t.integer "created_by_id"
     t.string "input_amount_currency"
-    t.decimal "input_amount", precision: 10, scale: 2
+    t.bigint "input_amount_cents"
     t.string "output_amount_currency"
-    t.decimal "output_amount", precision: 10, scale: 2
+    t.bigint "output_amount_cents"
     t.datetime "date_of_transaction"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
