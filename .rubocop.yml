@@ -1,0 +1,62 @@
+require:
+  - rubocop-rails
+
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+  Exclude:
+    - db/schema.rb
+    - db/migrate/**/*
+    - config.ru
+    - vendor/**/*
+    - bin/*
+
+Layout/HashAlignment:
+  EnforcedColonStyle:
+    - table
+    - key
+  EnforcedHashRocketStyle:
+    - table
+    - key
+
+Layout/LineLength:
+  Enabled: false
+
+# Disable for specs. Using the "expect to change" flow in specs requires custom
+# line breaking that this cop does not like
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - spec/**/*
+
+Naming/InclusiveLanguage:
+  Enabled: false
+
+# Many of the Rails cops try to enforce style rather than substance.
+# Some also yield false positives and have broken auto-correction.
+# Disable them all by default and then opt-into the ones that are meaningful.
+Rails:
+  Enabled: false
+
+Rails/OutputSafety:
+  Enabled: true
+
+Rails/PluralizationGrammar:
+  Enabled: true
+
+Rails/RequestReferer:
+  Enabled: true
+  EnforcedStyle: referrer
+
+Rails/SaveBang:
+  Enabled: true
+  AllowedReceivers:
+    - FactoryBot
+
+Rails/ScopeArgs:
+  Enabled: true
+
+Rails/UniqBeforePluck:
+  Enabled: true

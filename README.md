@@ -85,6 +85,7 @@ http POST :3000/transactions created_by_id=123 input_amount_currency=USD input_a
 rails dev:cache
 ```
 
+The API is hosted live on heroku at [this link](https://whispering-everglades-41280.herokuapp.com/transactions)
 
 ## Author
 
