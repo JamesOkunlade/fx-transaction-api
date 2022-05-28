@@ -1,0 +1,28 @@
+name: QA
+
+on: [push, pull_request]
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+      - name: Setup Rubocop
+        run: bundle install
+      - name: Rubocop Report
+        run: rubocop --color
+  brakeman:
+    name: Brakeman
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+      - name: Setup Brakeman
+        run: bundle install
+      - name: Brakeman Report
+        run: brakeman
