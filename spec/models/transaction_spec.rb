@@ -1,6 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe Transaction, type: :model do
+require "rails_helper"
+
+RSpec.describe(Transaction, type: :model) do
   # Validation tests
   it { should validate_presence_of(:created_by_id) }
   it { should validate_presence_of(:input_amount_currency) }

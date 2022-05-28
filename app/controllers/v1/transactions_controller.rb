@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module V1
   class TransactionsController < ApplicationController
-    before_action  :set_transaction, only: :show
+    before_action :set_transaction, only: :show
 
     # GET /transactions
     def index
@@ -22,7 +24,7 @@ module V1
     private
 
     def transaction_params
-      params.require(:transaction).permit(:created_by_id, :input_amount_currency, :input_amount_cents, 
+      params.require(:transaction).permit(:created_by_id, :input_amount_currency, :input_amount_cents,
         :output_amount_currency, :output_amount_cents, :date_of_transaction)
     end
 

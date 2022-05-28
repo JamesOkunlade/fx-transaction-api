@@ -13,6 +13,7 @@ AllCops:
     - config.ru
     - vendor/**/*
     - bin/*
+    - config/environments/production.rb
 
 Layout/HashAlignment:
   EnforcedColonStyle:
