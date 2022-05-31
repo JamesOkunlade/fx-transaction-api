@@ -2,7 +2,7 @@
 
 module V1
   class TransactionsController < ApplicationController
-    before_action :set_transaction, only: :show
+    before_action :set_transaction, only: [:show, :update]
 
     # GET /transactions
     def index
@@ -19,6 +19,17 @@ module V1
     # GET /transactions/:id
     def show
       json_response(@transaction)
+    end
+
+    # PUT /transactions/:id
+    def update
+      # @transaction.update!(transaction_params)
+      # head :no_content
+      if @transaction.update(transaction_params)
+        head :no_content
+      else
+        json_response(@transaction, :unprocessable_entity)
+      end
     end
 
     private

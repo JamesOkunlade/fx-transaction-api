@@ -28,7 +28,7 @@ RSpec.describe("Transactions", type: :request) do
     before { get "/transactions/#{transaction_id}" }
 
     context "when the record exists" do
-      it "returns the todo" do
+      it "returns the a transaction" do
         expect(json).not_to(be_empty)
         expect(json["id"]).to(eq(transaction_id))
       end
@@ -60,7 +60,7 @@ RSpec.describe("Transactions", type: :request) do
     end
 
     # invalid payload
-    let(:invalid_attributes) { { transaction: { input_amount_currency: "DKR" } } }
+    let(:invalid_attributes) { { transaction: { input_amount_currency: "DKR", input_amount_cents: -40 } } }
 
     context "when the request is valid" do
       before { post "/transactions", params: valid_attributes }
@@ -86,7 +86,32 @@ RSpec.describe("Transactions", type: :request) do
 
       it "returns a validation failure message" do
         expect(response.body)
-          .to(match(/Validation failed: Created by can't be blank, Input amount cents can't be blank, Output amount currency can't be blank, Output amount cents can't be blank, Date of transaction can't be blank/))
+          .to(match(/Validation failed: Created by can't be blank, Output amount currency can't be blank, Output amount cents can't be blank, Date of transaction can't be blank, Input amount cents must be greater than 0, Output amount cents is not a number/))
+      end
+    end
+  end
+
+  describe "PUT /transactions<:id>" do
+    let(:valid_attributes) { { transaction: { input_amount_currency: "cAD"} } }
+    let(:invalid_attributes) { { transaction: { input_amount_cents: -40} } }
+
+    context "when record exists" do
+      before { put "/transactions/#{transaction_id}", params: valid_attributes }
+
+      it "updated the record" do
+        expect(response.body).to be_empty
+      end
+
+      it "should return a status 204" do
+        expect(response).to(have_http_status(204))
+      end
+
+      context "when attribute is invalid" do
+        before { put "/transactions/#{transaction_id}", params: invalid_attributes }
+        
+        it "shoult return a status code 422" do
+          expect(response).to(have_http_status(422))
+        end
       end
     end
   end

@@ -5,6 +5,9 @@ class Transaction < ApplicationRecord
   validates_presence_of :created_by_id, :input_amount_currency, :input_amount_cents, :output_amount_currency,
     :output_amount_cents, :date_of_transaction
 
+  validates :input_amount_cents, numericality: { greater_than: 0 }
+  validates :output_amount_cents, numericality: { greater_than: 0 }
+
   before_save do
     input_amount_currency.downcase!
     output_amount_currency.downcase!
