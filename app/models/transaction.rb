@@ -13,15 +13,15 @@ class Transaction < ApplicationRecord
     output_amount_currency.downcase!
   end
 
-  after_commit :flush_cache
+  # after_commit :flush_cache
 
-  def self.cached_all
-    Rails.cache.fetch([name, "all"]) do
-      all.to_a
-    end
-  end
+  # def self.cached_all
+  #   Rails.cache.fetch([name, "all"]) do
+  #     all.to_a
+  #   end
+  # end
 
-  def flush_cache
-    Rails.cache.delete([self.class.name, "all"])
-  end
+  # def flush_cache
+  #   Rails.cache.delete([self.class.name, "all"])
+  # end
 end

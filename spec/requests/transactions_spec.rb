@@ -92,14 +92,14 @@ RSpec.describe("Transactions", type: :request) do
   end
 
   describe "PUT /transactions<:id>" do
-    let(:valid_attributes) { { transaction: { input_amount_currency: "cAD"} } }
-    let(:invalid_attributes) { { transaction: { input_amount_cents: -40} } }
+    let(:valid_attributes) { { transaction: { input_amount_currency: "cAD" } } }
+    let(:invalid_attributes) { { transaction: { input_amount_cents: -40 } } }
 
     context "when record exists" do
       before { put "/transactions/#{transaction_id}", params: valid_attributes }
 
       it "updated the record" do
-        expect(response.body).to be_empty
+        expect(response.body).to(be_empty)
       end
 
       it "should return a status 204" do
@@ -108,7 +108,7 @@ RSpec.describe("Transactions", type: :request) do
 
       context "when attribute is invalid" do
         before { put "/transactions/#{transaction_id}", params: invalid_attributes }
-        
+
         it "shoult return a status code 422" do
           expect(response).to(have_http_status(422))
         end

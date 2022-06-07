@@ -6,7 +6,7 @@ module V1
 
     # GET /transactions
     def index
-      @transactions = Transaction.cached_all.paginate(page: params[:page], per_page: 10)
+      @transactions = Transaction.paginate(page: params[:page], per_page: 10)
       json_response(@transactions)
     end
 
@@ -23,13 +23,8 @@ module V1
 
     # PUT /transactions/:id
     def update
-      # @transaction.update!(transaction_params)
-      # head :no_content
-      if @transaction.update(transaction_params)
-        head :no_content
-      else
-        json_response(@transaction, :unprocessable_entity)
-      end
+      @transaction.update!(transaction_params)
+      head :no_content
     end
 
     private
